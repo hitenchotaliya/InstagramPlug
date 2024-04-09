@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const https = require('https');
 const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -60,7 +61,12 @@ app.get('/getCode', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
+app.get("/privacy-policy", (request, response) => {
+    response.sendFile(path.join(__dirname, 'privacy-policy.html'));
+});
+app.get("/terms-conditions", (request, response) => {
+    response.sendFile(path.join(__dirname, 'terms-conditions.html'));
+});
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
