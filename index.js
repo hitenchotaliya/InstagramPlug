@@ -55,7 +55,9 @@ app.get('/getCode', async (req, res) => {
         longLivedToken = tokenResponse.data.access_token;
 
         // Redirect back to homepage after storing the tokens
-        res.redirect('/');
+       // res.redirect('/');
+                res.redirect('http://localhost/xyz');
+
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
