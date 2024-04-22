@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const https = require('https');
+const mysql = require('mysql');
 const fs = require('fs');
 const cors = require('cors');
 const path = require('path');
@@ -9,6 +10,24 @@ const app = express();
 const PORT = process.env.PORT || 3030;
 app.use(cors());
 app.use(express.json()); // Parse JSON bodies
+
+
+// MySQL connection configuration
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'instagramplugdb'
+});
+
+// Connect to MySQL
+connection.connect((err) => {
+    if (err) {
+        console.error('Error connecting to MySQL:', err);
+        return;
+    }
+    console.log('Connected to MySQL');
+});
 
 const INSTAGRAM_APP_ID = '419232580804647';
 const INSTAGRAM_APP_SECRET = '56b7fae5ccfdce70e1d87a9668f43e8e';
@@ -62,7 +81,17 @@ app.get('/getCode', async (req, res) => {
         longLivedToken = tokenResponse.data.access_token;
         console.log('Received Current Page URL:', currentPageURL);
 
-
+        //Store in db
+        if (longLivedToken) {
+            const sql = `INSERT INTO tokens (long_access_token) VALUES (?)`;
+            connection.query(sql, [longLivedToken], (err, result) => {
+                if (err) {
+                    console.error('Error saving token to database:', err);
+                    return res.status(500).send('Error saving token to database');
+                }
+                console.log('Token saved to database:', longLivedToken);
+            });
+        }
         // Redirect back to homepage after storing the tokens
         if (currentPageURL) {
             res.redirect(currentPageURL);
