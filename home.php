@@ -18,7 +18,7 @@
             console.log("Current Page URL:", currentPageURL); // Log the URL
 
             // Send current page URL to Node.js server using fetch API
-            fetch('http://localhost:3030/getUrl', {
+            fetch('https://instagram-plug-618o.vercel.app/getUrl', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -29,7 +29,7 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = "http://localhost:3030/";
+                        window.location.href = "https://instagram-plug-618o.vercel.app/";
                     } else {
                         throw new Error('Network response was not ok.');
                     }
