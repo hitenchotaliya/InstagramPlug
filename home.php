@@ -17,6 +17,7 @@
             var currentPageURL = window.location.href;
             console.log("Current Page URL:", currentPageURL); // Log the URL
 
+
             var token = new URL(currentPageURL).searchParams.get('token');
             if (token) {
                 // Remove the token from the URL
@@ -47,6 +48,7 @@
                 console.log('No token found in the URL.');
             }
         }
+
 
         // Call the function to fetch and display Instagram data when the page loads
         window.onload = fetchAndDisplayInstagramData;
