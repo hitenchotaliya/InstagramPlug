@@ -60,13 +60,13 @@ app.get('/getCode', async (req, res) => {
         longLivedToken = tokenResponse.data.access_token;
 
         // Redirect back to homepage after storing the tokens
-        if (currentPageURL) {
-            res.redirect(currentPageURL);
+        // if (currentPageURL) {
+        //     res.redirect(currentPageURL);
 
-        } else {
-            res.redirect('/');
+        // } else {
+        res.redirect('/');
 
-        }
+
 
     } catch (error) {
         console.error('Error:', error);
