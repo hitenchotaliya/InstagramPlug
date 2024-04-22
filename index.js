@@ -60,6 +60,8 @@ app.get('/getCode', async (req, res) => {
         const tokenResponse = await axios.post(accessTokenUrl, tokenParams);
 
         longLivedToken = tokenResponse.data.access_token;
+        console.log('Received Current Page URL:', currentPageURL);
+
 
         // Redirect back to homepage after storing the tokens
         if (currentPageURL) {
