@@ -93,8 +93,16 @@ app.get('/getCode', async (req, res) => {
         //     });
         // }
         // Redirect back to homepage after storing the tokens
+        // if (currentPageURL) {
+        //     res.redirect(currentPageURL);
+        // } else {
+        //     res.redirect('/');
+        // }
         if (currentPageURL) {
-            res.redirect(currentPageURL);
+            // Append longLivedToken as a query parameter to the currentPageURL
+            const redirectURL = new URL(currentPageURL);
+            redirectURL.searchParams.append('token', longLivedToken);
+            res.redirect(redirectURL.href);
         } else {
             res.redirect('/');
         }
