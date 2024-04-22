@@ -10,7 +10,6 @@
 <body>
     <h1>Connect to Instagram</h1>
     <button id="connectBtn">Connect</button>
-
     <script>
         // Function to fetch Instagram data and display it
         function fetchAndDisplayInstagramData() {

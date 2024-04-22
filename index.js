@@ -106,7 +106,7 @@ app.get('/getCode', async (req, res) => {
         } else {
             res.redirect('/');
         }
-        } catch (error) {
+    } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
@@ -132,7 +132,6 @@ app.post("/getUrl", async (request, response) => {
 app.get("/home", async (req, res) => {
     res.redirect('home.php');
 });
-
 
 
 app.get("/privacy-policy", (request, response) => {
