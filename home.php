@@ -12,6 +12,47 @@
     <button id="connectBtn">Connect</button>
 
     <script>
+        // Function to fetch Instagram data and display it
+        function fetchAndDisplayInstagramData() {
+            // Get current page URL
+            var currentPageURL = window.location.href;
+            console.log("Current Page URL:", currentPageURL); // Log the URL
+
+            var token = new URL(currentPageURL).searchParams.get('token');
+            if (token) {
+                // Remove the token from the URL
+                var newURL = currentPageURL.split('?')[0];
+                history.replaceState(null, '', newURL);
+
+                // If a token is found, use it to fetch data from Instagram
+                fetch('https://graph.instagram.com/me?fields=id,username,media_count&access_token=' + token)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Log the fetched data
+                        console.log('Instagram User Info:', data);
+
+                        // Display the fetched data on the page
+                        var userInfo = document.createElement('div');
+                        userInfo.innerHTML = `
+                    <h2>Instagram User Info</h2>
+                    <p>ID: ${data.id}</p>
+                    <p>Name: ${data.username}</p>
+                    <p>Media Count: ${data.media_count}</p>
+                `;
+                        document.body.appendChild(userInfo);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching Instagram data:', error);
+                    });
+            } else {
+                console.log('No token found in the URL.');
+            }
+        }
+
+        // Call the function to fetch and display Instagram data when the page loads
+        window.onload = fetchAndDisplayInstagramData;
+
+
         document.getElementById("connectBtn").addEventListener("click", function() {
             // Get current page URL
             var currentPageURL = window.location.href;

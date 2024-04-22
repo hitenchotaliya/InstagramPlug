@@ -106,7 +106,7 @@ app.get('/getCode', async (req, res) => {
         } else {
             res.redirect('/');
         }
-    } catch (error) {
+        } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
