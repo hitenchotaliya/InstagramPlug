@@ -15,6 +15,8 @@ const INSTAGRAM_APP_SECRET = '56b7fae5ccfdce70e1d87a9668f43e8e';
 const INSTAGRAM_APP_REDIRECT_URI = 'https://instagram-plug-618o.vercel.app/getCode'; // Update to your live app URL
 
 let longLivedToken = null;
+let currentPageURL = null;
+
 
 const authorizationUrl = `https://api.instagram.com/oauth/authorize?client_id=${INSTAGRAM_APP_ID}&redirect_uri=${encodeURIComponent(INSTAGRAM_APP_REDIRECT_URI)}&scope=user_profile,user_media&response_type=code`;
 
@@ -60,14 +62,11 @@ app.get('/getCode', async (req, res) => {
         longLivedToken = tokenResponse.data.access_token;
 
         // Redirect back to homepage after storing the tokens
-        // if (currentPageURL) {
-        //     res.redirect(currentPageURL);
-
-        // } else {
-        res.redirect('/');
-
-
-
+        if (currentPageURL) {
+            res.redirect(currentPageURL);
+        } else {
+            res.redirect('/');
+        }
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
@@ -76,7 +75,7 @@ app.get('/getCode', async (req, res) => {
 
 app.post("/getUrl", async (request, response) => {
     try {
-        const currentPageURL = request.body.currentPageURL;
+        currentPageURL = request.body.currentPageURL;
         if (!currentPageURL) {
             return response.status(400).send('currentPageURL is missing in the request body');
         }
