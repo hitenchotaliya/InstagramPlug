@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3030;
 
 const INSTAGRAM_APP_ID = '419232580804647';
 const INSTAGRAM_APP_SECRET = '56b7fae5ccfdce70e1d87a9668f43e8e';
@@ -14,6 +14,8 @@ const INSTAGRAM_APP_REDIRECT_URI = 'https://instagram-plug-618o.vercel.app/getCo
 let longLivedToken = null;
 
 const authorizationUrl = `https://api.instagram.com/oauth/authorize?client_id=${INSTAGRAM_APP_ID}&redirect_uri=${encodeURIComponent(INSTAGRAM_APP_REDIRECT_URI)}&scope=user_profile,user_media&response_type=code`;
+
+
 
 app.get('/', (req, res) => {
     if (!longLivedToken) {
@@ -61,6 +63,36 @@ app.get('/getCode', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+
+
+
+
+app.post("/getUrl", async (request, response) => {
+    try {
+        const { currentPageURL } = request.body; // Extracting currentPageURL from the request body
+        console.log("Received Current Page URL:", currentPageURL);
+
+        // Redirect to '/test' after sending the response
+        response.redirect('/test');
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.get("/privacy-policy", (request, response) => {
     response.sendFile(path.join(__dirname, 'privacy-policy.html'));
 });
